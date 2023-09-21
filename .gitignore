@@ -1,0 +1,6 @@
+.vscode
+*.o
+*.d
+*.dll
+*.so
+anime_girl.png
