@@ -27,8 +27,20 @@ git clone https://github.com/THEGOLDENPRO/aghpb.c
 cd aghpb.c
 make
 ```
+but make sure you have [``libcurl``](https://curl.se/libcurl/c/) installed.
+
+This is the command I used to compile the library together with my own C program (make sure to ``cd aghpb.c``):
+```sh
+gcc -o file_name file_name.c aghpb.c -lcurl
+```
 
 ## Examples
+You can also run examples like so: 
+```sh
+cp ./examples/random.c ./book_generator.c
+gcc -o book_generator ./book_generator.c aghpb.c -lcurl && ./book_generator
+```
+
 This is how you may retrieve a random anime girl holding a programming book:
 ```c
 #include <stdio.h>

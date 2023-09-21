@@ -4,3 +4,5 @@
 *.dll
 *.so
 anime_girl.png
+book_generator
+book_generator.c
