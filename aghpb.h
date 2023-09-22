@@ -1,6 +1,8 @@
 #ifndef AGHPBLIB_H_INCLUDED
 #define AGHPBLIB_H_INCLUDED
 
+#include <stdio.h>
+
 typedef struct Book {
     char *name;
     char *category;
