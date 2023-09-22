@@ -157,9 +157,6 @@ char* aghpb_categories() {
     CURL *curl;
     CURLcode response;
 
-    struct curl_header *header;
-    struct Book book;
-
     struct MemoryStruct memory_struct;
     init_memory_struct(&memory_struct);
 
