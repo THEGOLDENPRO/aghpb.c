@@ -61,20 +61,13 @@ static struct Book get_book(FILE *file, const char *url) {
         }
 
         curl_easy_header(curl, "Book-Name", 0, CURLH_HEADER, -1, &header);
-        char book_name[1000];
-        strcpy(book_name, header->value);
+        strcpy(book.name, header->value);
 
         curl_easy_header(curl, "Book-Category", 0, CURLH_HEADER, -1, &header);
-        char book_category[1000];
-        strcpy(book_category, header->value);
+        strcpy(book.category, header->value);
 
         curl_easy_header(curl, "Book-Date-Added", 0, CURLH_HEADER, -1, &header);
-        char book_date_added[30];
-        strcpy(book_date_added, header->value);
-
-        book.name = book_name;
-        book.category = book_category;
-        book.date_added = book_date_added;
+        strcpy(book.date_added, header->value);
 
         //curl_free(url);
     } else {
