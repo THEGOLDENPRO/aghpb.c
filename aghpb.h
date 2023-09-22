@@ -9,8 +9,8 @@ typedef struct Book {
     char date_added[30];
 } AGHPB_Book;
 
-struct Book aghpb_random(FILE *file);
-struct Book aghpb_random_category(FILE *file, char category[]);
+struct Book* aghpb_random(FILE *file);
+struct Book* aghpb_random_category(FILE *file, char category[]);
 char* aghpb_categories();
 
 #endif // AGHPBLIB_H_INCLUDED

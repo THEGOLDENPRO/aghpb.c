@@ -37,14 +37,14 @@ static size_t write_func(void *memory, size_t size_, size_t nmemb, struct Memory
  * Fetches a book from the URL given as input and writes it to the given file.
  * @param file The file you would like to curse with anime girls.
  * @param url The url used to fetch the book.
- * @return The programming book.
+ * @return The programming book or NULL in case of failure.
  */
-static struct Book get_book(FILE *file, const char *url) {
+static struct Book *get_book(FILE *file, const char *url) {
     CURL *curl;
     CURLcode response;
 
     struct curl_header *header;
-    struct Book book;
+    struct Book *book = NULL;
 
     curl = curl_easy_init();
 
@@ -58,18 +58,18 @@ static struct Book get_book(FILE *file, const char *url) {
 
         if (response != CURLE_OK) {
             fprintf(stderr, "Request failed: %s\n", curl_easy_strerror(response));
+        } else {
+            book = malloc(sizeof(struct Book));
+
+            curl_easy_header(curl, "Book-Name", 0, CURLH_HEADER, -1, &header);
+            strcpy(book->name, header->value);
+
+            curl_easy_header(curl, "Book-Category", 0, CURLH_HEADER, -1, &header);
+            strcpy(book->category, header->value);
+
+            curl_easy_header(curl, "Book-Date-Added", 0, CURLH_HEADER, -1, &header);
+            strcpy(book->date_added, header->value);
         }
-
-        curl_easy_header(curl, "Book-Name", 0, CURLH_HEADER, -1, &header);
-        strcpy(book.name, header->value);
-
-        curl_easy_header(curl, "Book-Category", 0, CURLH_HEADER, -1, &header);
-        strcpy(book.category, header->value);
-
-        curl_easy_header(curl, "Book-Date-Added", 0, CURLH_HEADER, -1, &header);
-        strcpy(book.date_added, header->value);
-
-        //curl_free(url);
     } else {
         fprintf(stderr, "Couldn't initialize easy curl!");
     }
@@ -84,9 +84,9 @@ static struct Book get_book(FILE *file, const char *url) {
 /**
  * Writes a random anime girl holding a programming book to a file object.
  * @param file The file you would like to curse with anime girls.
- * @return The programming book.
+ * @return The programming book or NULL in case of failure.
  */
-struct Book aghpb_random(FILE *file) {
+struct Book *aghpb_random(FILE *file) {
     return get_book(file, "https://api.devgoldy.xyz/aghpb/v1/random");
 }
 
@@ -95,9 +95,11 @@ struct Book aghpb_random(FILE *file) {
  * Writes a random anime girl holding a programming book of that specified category to a file object.
  * @param file The file you would like to curse with anime girls.
  * @param category The category of programming books you would like.
- * @return The programming book.
+ * @return The programming book or NULL in case of failure.
  */
-struct Book aghpb_random_category(FILE *file, char category[]) {
+struct Book *aghpb_random_category(FILE *file, char category[]) {
+    struct Book* book = NULL;
+
     char url[2048];
     CURL *curl = curl_easy_init();
     if(curl) {
@@ -105,10 +107,11 @@ struct Book aghpb_random_category(FILE *file, char category[]) {
         if(escaped_category) {
             sprintf(url, "https://api.devgoldy.xyz/aghpb/v1/random?category=%s", escaped_category);
             curl_free(escaped_category);
+            book = get_book(file, url);
         }
         curl_easy_cleanup(curl);
     }
-    return get_book(file, url);
+    return book;
 }
 
 
