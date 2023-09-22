@@ -85,8 +85,5 @@ int main() {
     return 0;
 }
 ```
-> **Warning**
->
-> The method above is currently broken. I'm struggling to fix it. 🫠 (Some help would be nice please 🙏)
 
 Made using my API at 👉 https://api.devgoldy.xyz/aghpb/v1/
