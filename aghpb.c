@@ -1,3 +1,4 @@
+#include "aghpb.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,13 +32,6 @@ size_t write_func(void *memory, size_t size_, size_t nmemb, struct MemoryStruct 
 
     return size_*nmemb;
 }
-
-
-struct Book {
-    char *name;
-    char *category;
-    char *date_added;
-};
 
 /**
  * Writes a random anime girl holding a programming book to a file object.
@@ -108,7 +102,9 @@ struct Book aghpb_random_category(FILE *file, char category[]) {
 
     if (curl) {
         char url[2048];
-        sprintf(url, "https://api.devgoldy.xyz/aghpb/v1/random?category=%s", curl_easy_escape(curl, category, 0));
+        char* escaped_category = curl_easy_escape(curl, category, 0);
+        sprintf(url, "https://api.devgoldy.xyz/aghpb/v1/random?category=%s", escaped_category);
+        curl_free(escaped_category);
 
         curl_easy_setopt(curl, CURLOPT_URL, url);
 
@@ -156,9 +152,6 @@ struct Book aghpb_random_category(FILE *file, char category[]) {
 char* aghpb_categories() {
     CURL *curl;
     CURLcode response;
-
-    struct curl_header *header;
-    struct Book book;
 
     struct MemoryStruct memory_struct;
     init_memory_struct(&memory_struct);
