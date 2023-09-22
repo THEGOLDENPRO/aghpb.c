@@ -102,7 +102,9 @@ struct Book aghpb_random_category(FILE *file, char category[]) {
 
     if (curl) {
         char url[2048];
-        sprintf(url, "https://api.devgoldy.xyz/aghpb/v1/random?category=%s", curl_easy_escape(curl, category, 0));
+        char* escaped_category = curl_easy_escape(curl, category, 0);
+        sprintf(url, "https://api.devgoldy.xyz/aghpb/v1/random?category=%s", escaped_category);
+        curl_free(escaped_category);
 
         curl_easy_setopt(curl, CURLOPT_URL, url);
 
