@@ -4,7 +4,7 @@
 int main() {
     char* categories = aghpb_categories();
 
-    printf("--> %s", categories);
+    printf("--> %s\n", categories);
 
     return 0;
 }
