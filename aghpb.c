@@ -100,11 +100,11 @@ struct Book *aghpb_random(FILE *file) {
 struct Book *aghpb_random_category(FILE *file, char category[]) {
     struct Book* book = NULL;
 
-    char url[2048];
     CURL *curl = curl_easy_init();
     if(curl) {
         char* escaped_category = curl_easy_escape(curl, category, 0);
         if(escaped_category) {
+            char url[2048];
             sprintf(url, "https://api.devgoldy.xyz/aghpb/v1/random?category=%s", escaped_category);
             curl_free(escaped_category);
             book = get_book(file, url);
