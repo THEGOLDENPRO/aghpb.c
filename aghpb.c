@@ -39,12 +39,12 @@ static size_t write_func(void *memory, size_t size_, size_t nmemb, struct Memory
  * @param url The url used to fetch the book.
  * @return The programming book or NULL in case of failure.
  */
-static struct Book *get_book(FILE *file, const char *url) {
+static AGHPB_Book *get_book(FILE *file, const char *url) {
     CURL *curl;
     CURLcode response;
 
     struct curl_header *header;
-    struct Book *book = NULL;
+    AGHPB_Book *book = NULL;
 
     curl = curl_easy_init();
 
@@ -59,7 +59,7 @@ static struct Book *get_book(FILE *file, const char *url) {
         if (response != CURLE_OK) {
             fprintf(stderr, "Request failed: %s\n", curl_easy_strerror(response));
         } else {
-            book = malloc(sizeof(struct Book));
+            book = malloc(sizeof(AGHPB_Book));
 
             curl_easy_header(curl, "Book-Name", 0, CURLH_HEADER, -1, &header);
             strcpy(book->name, header->value);
@@ -86,7 +86,7 @@ static struct Book *get_book(FILE *file, const char *url) {
  * @param file The file you would like to curse with anime girls.
  * @return The programming book or NULL in case of failure.
  */
-struct Book *aghpb_random(FILE *file) {
+AGHPB_Book *aghpb_random(FILE *file) {
     return get_book(file, "https://api.devgoldy.xyz/aghpb/v1/random");
 }
 
@@ -97,8 +97,8 @@ struct Book *aghpb_random(FILE *file) {
  * @param category The category of programming books you would like.
  * @return The programming book or NULL in case of failure.
  */
-struct Book *aghpb_random_category(FILE *file, char category[]) {
-    struct Book* book = NULL;
+AGHPB_Book *aghpb_random_category(FILE *file, char category[]) {
+    AGHPB_Book* book = NULL;
 
     CURL *curl = curl_easy_init();
     if(curl) {
