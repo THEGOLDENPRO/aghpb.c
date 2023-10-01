@@ -31,14 +31,15 @@ but make sure you have [``libcurl``](https://curl.se/libcurl/c/) installed.
 
 This is the command I used to compile the library together with my own C program:
 ```sh
-gcc -o file_name file_name.c aghpb.c -lcurl
+gcc -o file_name file_name.c aghpb.c -I . -lcurl
 ```
+This is assuming `aghpb.h` & `aghpb.c` are in the same folder as your main program.
 
 ## Examples
 You can also run examples like so: 
 ```sh
 cp ./examples/random.c ./book_generator.c
-gcc -o book_generator ./book_generator.c aghpb.c -lcurl && ./book_generator
+gcc -o book_generator ./book_generator.c aghpb.c -I . -lcurl && ./book_generator
 ```
 > *make sure to ``cd aghpb.c``*
 
