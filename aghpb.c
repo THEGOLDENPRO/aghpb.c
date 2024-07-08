@@ -69,6 +69,9 @@ static AGHPB_Book *get_book(FILE *file, const char *url) {
 
             curl_easy_header(curl, "Book-Date-Added", 0, CURLH_HEADER, -1, &header);
             strcpy(book->date_added, header->value);
+
+            curl_easy_header(curl, "Book-Search-ID", 0, CURLH_HEADER, -1, &header);
+            strcpy(book->search_id, header->value);
         }
     } else {
         fprintf(stderr, "Couldn't initialize easy curl!");
@@ -151,3 +154,23 @@ char* aghpb_categories() {
 
     return categories;
 }
+
+
+/**
+ * Retrieves a programming book indicated by the search ID and writes it to a file.
+ * @param file The file you would like to curse with anime girls.
+ * @param id The search ID of the programming book you would like to retrieve.
+ * @return The programming book or NULL in case of failure.
+ */
+AGHPB_Book *aghpb_get_book(FILE *file, char id[]) {
+    char url[2048];
+    sprintf(url, "https://api.devgoldy.xyz/aghpb/v1/get/id/%s", id);
+
+    return get_book(file, url);
+}
+
+/*
+TODO: add search API function with the help of a JSON serializer
+I found one called Parson (https://github.com/kgabis/parson) but it requires the build infrastructure for aghpb.c to change
+I'm too lazy to change it now, so I'll do it later :3
+*/
