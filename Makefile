@@ -3,9 +3,8 @@
 
 CC = gcc  # C compiler
 CFLAGS = -fPIC -Wall -Wextra -O2 -g  # C flags
-LDFLAGS = -shared   # linking flags
-RM = rm -f   # rm command
-TARGET_LIB = libtarget.so  # target lib
+LDFLAGS = -shared -lcurl   # linking flags
+TARGET_LIB = libaghpb.so  # target lib
 
 SRCS = aghpb.c  # source files
 OBJS = $(SRCS:.c=.o)
@@ -23,4 +22,4 @@ include $(SRCS:.c=.d)
 
 .PHONY: clean
 clean:
-	-${RM} ${TARGET_LIB} ${OBJS} $(SRCS:.c=.d)
+	-rm -f ${TARGET_LIB} ${OBJS} $(SRCS:.c=.d)
